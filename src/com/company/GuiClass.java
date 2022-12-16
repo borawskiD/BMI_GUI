@@ -13,19 +13,19 @@ public class GuiClass extends JFrame implements ItemListener, ListSelectionListe
     JTextField weightInput;
     JTextField heightInput;
     JTextField ageInput;
-    JLabel weightLabel = new JLabel("Waga");
-    JLabel heightLabel= new JLabel("Wzrost");
-    JLabel ageLabel= new JLabel("Wiek");
-    JPanel panelLeft = new JPanel(new FlowLayout());
-    JPanel panelRight = new JPanel(new FlowLayout());
-    ButtonGroup buttonGroup = new ButtonGroup();
+    JLabel weightLabel;
+    JLabel heightLabel;
+    JLabel ageLabel;
+    JPanel panelLeft;
+    JPanel panelRight;
+    ButtonGroup buttonGroup;
     JCheckBox male;
     JCheckBox female;
-    JButton BMIButton = new JButton("BMI");
-    JButton BMRButton = new JButton("BMR");
-    String activityLevels[] = {"Siedzący", "Lekka aktywność", "Umiarkowana aktywność", "Bardzo aktywny", "Ekstra aktywność"};
-    JList<String> jList = new JList<>(activityLevels);
-    JScrollPane jScrollPane = new JScrollPane(jList);
+    JButton BMIButton;
+    JButton BMRButton;
+    String[] activityLevels;
+    JList<String> jList;
+    JScrollPane jScrollPane;
     int activityLevelValue;
     int genderValue;
     Calculator calculator = new Calculator();
@@ -33,11 +33,24 @@ public class GuiClass extends JFrame implements ItemListener, ListSelectionListe
     public GuiClass(){
         super("Kalkulator BMI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400,500);
+        setSize(400,250);
+
+        ageLabel= new JLabel("Wiek");
+        panelLeft = new JPanel(new FlowLayout());
+        panelRight = new JPanel(new FlowLayout());
+        buttonGroup = new ButtonGroup();
+        BMIButton = new JButton("BMI");
+        BMRButton = new JButton("BMR");
+        activityLevels = new String[]{"Siedzący", "Lekka aktywność", "Umiarkowana aktywność", "Bardzo aktywny", "Ekstra aktywność"};
+        jList = new JList<>(activityLevels);
+        jScrollPane = new JScrollPane(jList);
+
+        weightLabel = new JLabel("Waga");
         panelLeft.add(weightLabel);
         weightInput = new JTextField(3);
         panelLeft.add(weightInput);
         panelLeft.add(new JLabel("kg"));
+        heightLabel= new JLabel("Wzrost");
         panelLeft.add(heightLabel);
         heightInput = new JTextField(3);
         panelLeft.add(heightInput);
@@ -50,8 +63,6 @@ public class GuiClass extends JFrame implements ItemListener, ListSelectionListe
         add(panelLeft, BorderLayout.WEST);
 
         panelRight.add(new Label("Płeć: "));
-
-        // Tworzy pola wyboru.
         male = new JCheckBox("Mężczyzna");
         female = new JCheckBox("Kobieta");
 
@@ -78,13 +89,7 @@ public class GuiClass extends JFrame implements ItemListener, ListSelectionListe
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        String str = "";
-
-        // Pobiera referencjÍ pola wyboru,
-        // ktůre wygenerowa≥o zdarzenie.
         JCheckBox cb = (JCheckBox) e.getItem();
-        // Informuje, ktůre z půl wyboru zmieni≥o stan.
-        System.out.println(cb.getText());
         if(cb.getText().equals("Mężczyzna")){
             genderValue = 1;
         }else{
@@ -94,7 +99,6 @@ public class GuiClass extends JFrame implements ItemListener, ListSelectionListe
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        System.out.println("changed");
        int idx = jList.getSelectedIndex();
        if (idx != -1) activityLevelValue = idx;
     }
